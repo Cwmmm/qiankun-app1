@@ -8,7 +8,17 @@
     <router-view />
   </div>
 </template>
-
+<script>
+// import { mapActions } from 'vuex';
+export default {
+  methods: {
+    // ...mapActions('global', ['setGlobalState']),
+  },
+  // created() {
+  //   this.setGlobalState('leftMenu', ['1', '2']);
+  // },
+};
+</script>
 <style>
 #app {
   height: 100%;

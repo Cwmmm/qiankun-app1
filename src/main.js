@@ -4,6 +4,7 @@ import VueRouter from 'vue-router';
 import App from './App.vue';
 import routes from './router';
 import store from './store';
+import globalRegister from './store/global-register'
 
 Vue.config.productionTip = false;
 
@@ -33,18 +34,7 @@ export async function bootstrap() {
   console.log('[vue] vue app bootstraped');
 }
 export async function mount(props) {
-  const state = {
-    userInfo: {
-      name: 'cwm',
-      pds: '1234567'
-    }
-  }
-  props.onGlobalStateChange((state, prev) => {
-    // state: 变更后的状态; prev 变更前的状态
-    console.log(state, prev);
-  });
-  props.setGlobalState(state);
-
+  globalRegister(store, props)
   render(props);
 }
 export async function unmount() {

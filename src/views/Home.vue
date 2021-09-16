@@ -1,19 +1,14 @@
 <template>
-  <div class="home">
+  <div class="container">
     <button @click="update" class="btn">点击更新userinfo</button>
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <p><label>getGlobalState获取到全局状态user:</label>{{ user }}</p>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue';
 import { mapState, mapActions } from 'vuex';
 export default {
-  name: 'Home',
-  components: {
-    HelloWorld,
-  },
   computed: {
     ...mapState('global', {
       user: (state) => state.user, // 获取父应用的user信息
@@ -22,13 +17,19 @@ export default {
   methods: {
     ...mapActions('global', ['setGlobalState']),
     update() {
-      this.setGlobalState('user', { name: '张三' });
+      this.setGlobalState({ user: { name: '张三' } });
     },
   },
 };
 </script>
 <style>
+.container {
+  width: 100%;
+  height: 100%;
+  background-color: #eee;
+  padding: 40px 20px;
+}
 .btn {
-  border: 1px solid #eee;
+  border: 1px solid #333;
 }
 </style>

@@ -12,26 +12,14 @@ function registerGlobalModule(store, props = {}) {
 
   // 获取初始化的state
   const initState = props.getGlobalState && props.getGlobalState() || {
-    menu: [],
-    user: {}
+    user: {},
+    leftMenu: []
   };
-
   // 将父应用的数据存储到子应用中，命名空间固定为global
   if (!store.hasModule('global')) {
     const globalModule = {
       namespaced: true,
       state: initState,
-      actions: {
-        // 子应用改变state并通知父应用
-        setGlobalState({ commit }, payload) {
-          commit('setGlobalState', payload);
-          commit('emitGlobalState', payload);
-        },
-        // 初始化，只用于mount时同步父应用的数据
-        initGlobalState({ commit }, payload) {
-          commit('setGlobalState', payload);
-        },
-      },
       mutations: {
         setGlobalState(state, payload) {
           // eslint-disable-next-line
@@ -42,6 +30,17 @@ function registerGlobalModule(store, props = {}) {
           if (props.setGlobalState) {
             props.setGlobalState(state);
           }
+        },
+      },
+      actions: {
+        // 子应用改变state并通知父应用
+        setGlobalState({ commit }, payload) {
+          commit('setGlobalState', payload);
+          commit('emitGlobalState', payload);
+        },
+        // 初始化，只用于mount时同步父应用的数据
+        initGlobalState({ commit }, payload) {
+          commit('setGlobalState', payload);
         },
       },
     };

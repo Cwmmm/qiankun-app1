@@ -22,7 +22,7 @@ export default {
     },
     routerTo() {
       //应该是正常路由跳转不应该带上父路由地址
-      this.$router.push('/about');
+      this.$router.push({ name: 'about' });
     },
   },
 };

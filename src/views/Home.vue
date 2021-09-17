@@ -2,6 +2,7 @@
   <div class="container">
     <button @click="update" class="btn">点击更新userinfo</button>
     <p><label>getGlobalState获取到全局状态user:</label>{{ user }}</p>
+    <button @click="routerTo" class="btn">点击跳转about</button>
   </div>
 </template>
 
@@ -18,6 +19,10 @@ export default {
     ...mapActions('global', ['setGlobalState']),
     update() {
       this.setGlobalState({ user: { name: '张三' } });
+    },
+    routerTo() {
+      //应该是正常路由跳转不应该带上父路由地址
+      this.$router.push('/about');
     },
   },
 };

@@ -7,14 +7,13 @@ import store from './store';
 import globalRegister from './store/global-register'
 
 Vue.config.productionTip = false;
-
 let router = null;
 let instance = null;
 function render(props = {}) {
   const { container } = props;
   router = new VueRouter({
-    base: window.__POWERED_BY_QIANKUN__ ? '#/app1/' : '#/',
-    mode: 'history',
+    base: window.__POWERED_BY_QIANKUN__ ? props.routerBase : '#/',
+    mode: 'hash',
     routes,
   });
 

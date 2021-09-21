@@ -1,20 +1,16 @@
-// sub-vue/src/store/global-register.js
 
-/**
- * 
- * @param {vuex实例} store 
- * @param {qiankun下发的props} props 
- */
-function registerGlobalModule(store, props = {}) {
+function registerGlobalModule(store, globalState) {
   if (!store || !store.hasModule) {
     return;
   }
-
   // 获取初始化的state
-  const initState = props.getGlobalState && props.getGlobalState() || {
-    user: {},
+  const initState = globalState?.initialState || {
+    userInfo: {
+      name: 'vueApp1'
+    },
     leftMenu: []
   };
+  console.log(initState)
   // 将父应用的数据存储到子应用中，命名空间固定为global
   if (!store.hasModule('global')) {
     const globalModule = {
@@ -22,14 +18,18 @@ function registerGlobalModule(store, props = {}) {
       state: initState,
       mutations: {
         setGlobalState(state, payload) {
-          // eslint-disable-next-line
           state = Object.assign(state, payload);
         },
         // 通知父应用
-        emitGlobalState(state) {
-          if (props.setGlobalState) {
-            props.setGlobalState(state);
+        emitGlobalState(state, payload) {
+          let obj = {
+            key: Object.keys(payload)[0],
+            value: payload[Object.keys(payload)[0]]
           }
+          globalState.emitStateChange && globalState.emitStateChange(obj);
+        },
+        initGlobalState(state, payload) {
+          state = Object.assign(state, payload);
         },
       },
       actions: {
@@ -40,7 +40,7 @@ function registerGlobalModule(store, props = {}) {
         },
         // 初始化，只用于mount时同步父应用的数据
         initGlobalState({ commit }, payload) {
-          commit('setGlobalState', payload);
+          commit('initGlobalState', payload);
         },
       },
     };

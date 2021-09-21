@@ -1,29 +1,29 @@
 <template>
   <div class="container">
     <button @click="update" class="btn">点击更新userinfo</button>
-    <p><label>getGlobalState获取到全局状态user:</label>{{ user }}</p>
+    <p><label>getGlobalState获取到全局状态user:</label>{{ userInfo.name }}</p>
     <button @click="routerTo" class="btn">点击跳转about</button>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import { mapState, mapActions } from 'vuex';
+import { mapActions, mapState } from "vuex";
 export default {
   computed: {
-    ...mapState('global', {
-      user: (state) => state.user, // 获取父应用的user信息
-    }),
+    ...mapState("global", ["userInfo"]),
   },
   methods: {
-    ...mapActions('global', ['setGlobalState']),
+    ...mapActions("global", ["setGlobalState"]),
     update() {
-      this.setGlobalState({ user: { name: '张三' } });
+      console.log(this.setGlobalState({ userInfo: { name: "app1Changed" }}));
     },
     routerTo() {
       //应该是正常路由跳转不应该带上父路由地址
-      this.$router.push({ name: 'about' });
+      this.$router.push({ name: "about" });
     },
+  },
+  created() {
+    console.log(this.$globalState);
   },
 };
 </script>

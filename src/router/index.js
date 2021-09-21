@@ -1,11 +1,25 @@
-import Vue from "vue";
-import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
+import About from "../views/About.vue";
 
-Vue.use(VueRouter);
+function routesFunc(routerBase = '') {
+  return [
+    {
+      path: routerBase,
+      name: 'home',
+      meta: {
+        title: '主页'
+      },
+      component: Home,
+    },
+    {
+      path: routerBase + "/about",
+      name: "about",
+      meta: {
+        title: '关于'
+      },
+      component: About
+    },
+  ];
+}
 
-const routes = [
-];
-
-
-export default routes;
+export default routesFunc;
